@@ -1,0 +1,284 @@
+🔹 Git & GitHub – 10 Q&A
+
+Q1. What is the difference between git pull and git fetch?
+ans= git fetch downloads new changes but does not merge them.
+ git pull = git fetch + git merge (brings changes into local branch).
+
+Q2. How do you resolve a merge conflict in Git?
+ Run git status → open conflicting files → manually fix conflict markers → git add <file> → git commit.
+
+Q3. Difference between git rebase and git merge?
+👉 merge: keeps history, adds a merge commit.
+👉 rebase: rewrites history, cleaner linear flow.
+
+Q4. How do you revert a commit already pushed to GitHub?
+👉 Use git revert <commit-id> → creates a new commit that undoes changes.
+
+Q5. Explain Git branching strategies.
+👉 GitFlow: master, develop, feature, release, hotfix.
+👉 Trunk-based: small, frequent merges into main.
+
+Q6. How do you squash commits?
+👉 git rebase -i HEAD~n → mark commits as squash.
+
+Q7. Difference between bare repo and working repo?
+👉 Bare repo: no working directory (used in servers).
+👉 Working repo: has .git + code.
+
+Q8. Your branch is behind origin/main, what do you do?
+👉 git pull --rebase origin main to update branch with latest code.
+
+Q9. What is GitHub Actions?
+👉 A CI/CD tool inside GitHub → automates build, test, deploy workflows using YAML files.
+
+Q10. How do you protect the main branch?
+👉 Enable branch protection rules: require PR reviews, block direct pushes, enforce status checks.
+
+🔹 Jenkins – 10 Q&A
+
+Q1. Explain Jenkins architecture.
+👉 Jenkins Master (control, scheduling) + Agents (execute builds).
+
+Q2. Declarative vs Scripted pipeline?
+👉 Declarative: simple, structured (pipeline {} syntax).
+👉 Scripted: flexible, Groovy-based scripting.
+
+Q3. Trigger Jenkins job on Git push?
+👉 Configure webhook in GitHub → Jenkins Git plugin → Poll SCM or webhook trigger.
+
+Q4. Difference between freestyle and pipeline jobs?
+👉 Freestyle: GUI-based, limited flexibility.
+👉 Pipeline: code-as-pipeline (Jenkinsfile), reusable & version-controlled.
+
+Q5. How to secure Jenkins?
+👉 Use RBAC, LDAP/AD, mask secrets, HTTPS, restrict anonymous access.
+
+Q6. Handle credentials securely?
+👉 Jenkins Credentials plugin → store secrets → use withCredentials block.
+
+Q7. Integrate Jenkins with Docker/Kubernetes?
+👉 Run builds in Docker agents.
+👉 Use Kubernetes plugin to spin up ephemeral agents.
+
+Q8. Approval stages in pipeline?
+👉 input step → manual approval before continuing.
+
+Q9. Jenkins shared libraries?
+👉 Centralized reusable Groovy scripts across pipelines.
+
+Q10. Scale Jenkins?
+👉 Use multiple agents, Kubernetes dynamic agents, split jobs into different controllers.
+
+🔹 Kubernetes – 10 Q&A
+
+Q1. Deployment vs ReplicaSet vs StatefulSet vs DaemonSet?
+👉 Deployment → stateless apps.
+👉 ReplicaSet → manages replicas.
+👉 StatefulSet → stateful apps (databases).
+👉 DaemonSet → runs pod on every node.
+
+Q2. Role of etcd?
+👉 Distributed key-value store → holds entire cluster state. or it is a database for our application.
+
+Q3. Service types?
+👉 ClusterIP (internal), NodePort (external via node) 30000 - 32767, LoadBalancer (cloud LB), Ingress (HTTP routing).
+
+Q4. Rolling updates & rollbacks?
+👉 kubectl rollout status deployment → update.
+👉 kubectl rollout undo deployment → rollback.
+
+Q5. ConfigMap vs Secret?
+👉 ConfigMap: non-sensitive configs.
+👉 Secret: sensitive (base64 encoded).
+Echo password | base64 --encoded
+
+Q6. Pod in CrashLoopBackOff?
+👉 Check logs (kubectl logs), describe pod (kubectl get describe), check env vars, probes, resource limits.
+
+Q7. HPA vs VPA?
+👉 HPA: scales pods horizontally (replicas) or increse number of pods.
+👉 VPA: adjusts CPU/memory requests.
+
+Q8. Secure cluster?
+👉 RBAC, TLS, secrets, network policies, namespaces.
+
+Q9. kube-proxy vs kubelet?
+👉 kube-proxy: networking, service routing.
+👉 kubelet: manages pods on node.
+
+Q10. Monitoring cluster?
+👉 Prometheus + Grafana, CloudWatch, ELK.
+
+🔹 Docker – 10 Q&A
+
+Q1. Docker image vs container?
+👉 Image: blueprint.
+👉 Container: running instance.
+
+Q2. Dockerfile best practices?
+👉 Use small base image, .dockerignore, multi-stage builds, pin versions.
+
+Q3. Reduce image size?
+👉 Alpine base, clean cache, multi-stage builds.
+
+Q4. Multi-stage builds?
+👉 Build app in one stage, copy only needed artifacts into final stage.
+
+Q5. COPY vs ADD? 
+👉 COPY → simple file copy.
+👉 ADD → supports remote URLs & tar extraction.
+
+Q6. Handle container logs?
+👉 docker logs <id>, log drivers (json, fluentd, ELK).
+
+Q7. Docker Compose vs Swarm?
+👉 Compose: multi-container setup on single host.
+👉 Swarm: clustering, orchestration or multi-container runs on multiple hosts.
+
+Q8. Connect multiple containers?
+👉 Use Docker networks (docker network create).
+
+Q9. Scan images?
+👉 Use Trivy, Clair, Anchore.
+
+Q10. ENTRYPOINT vs CMD?
+👉 ENTRYPOINT → fixed main command.
+👉 CMD → default arguments.
+
+
+🔹 Terraform – 10 Q&A
+
+Q1. What is Terraform state file? Why remote backend?
+👉 State tracks infra resources. Remote backend (S3 + DynamoDB lock) ensures collaboration, consistency, and no conflicts.
+
+Q2. Difference between terraform plan and terraform apply?
+👉 plan shows changes (dry run), apply executes and provisions resources.
+
+Q3. State locking?
+👉 DynamoDB table locks state → prevents multiple apply at same time.
+
+Q4. Terraform modules?
+👉 Reusable code blocks (network, EC2, VPC). Helps DRY & consistency.
+
+Q5. Manage multiple environments?
+👉 Workspaces (terraform workspace new dev), or directory structure (dev/test/prod).
+
+Q6. Handle secrets in Terraform?
+👉 Use SSM Parameter Store, Secrets Manager, Vault → never hardcode.
+
+Q7. Terraform vs CloudFormation?
+👉 Terraform: multi-cloud, HCL language.
+👉 CloudFormation: AWS-only, JSON/YAML.
+
+Q8. Upgrade provider versions?
+👉 Update required_providers block → run terraform init -upgrade.
+
+Q9. terraform import?
+👉 Brings existing AWS resources under Terraform management.
+
+Q10. Troubleshoot terraform apply fail?
+👉 Check plan output, logs, provider config, permissions (IAM).
+
+Ansible – 10 Q&A
+
+Q1. Ad-hoc vs Playbook?
+👉 Ad-hoc: one-time tasks (ansible all -m ping).
+👉 Playbook: YAML-defined automation, reusable.
+
+Q2. Inventory file role?
+👉 Defines managed hosts (static or dynamic). Example: /etc/ansible/hosts.
+
+Q3. Handle secrets?
+👉 Ansible Vault → encrypt passwords/keys (ansible-vault encrypt).
+
+Q4. What are roles?
+👉 Pre-structured format with tasks, handlers, vars, templates, defaults, files.
+
+Q5. Push vs Pull mode?
+👉 Push = default (Ansible pushes tasks).
+👉 Pull = nodes pull config via cron.
+
+Q6. Test playbooks?
+👉 Use ansible-playbook --check --diff, Molecule testing.
+
+Q7. Difference between when and register?
+👉 when: conditional execution.
+👉 register: store command output for later use.
+
+Q8. Ansible for AWS provisioning?
+👉 Use AWS modules (ec2, s3, rds) with IAM credentials.
+
+Q9. Reuse variables across playbooks?
+👉 group_vars/, host_vars/, vars_files:.
+
+Q10. Idempotency?
+👉 Running playbook multiple times won’t change system if already in desired state.
+
+🔹 Linux – 10 Q&A
+
+Q1. Find CPU & memory usage?
+👉 top, htop, free -m, vmstat.
+
+Q2. Hard link vs Soft link?
+👉 Hard link → same inode, works if original deleted.
+👉 Soft link → shortcut (symbolic), breaks if original deleted.
+
+Q3. chmod 755 meaning?
+👉 Owner: read/write/execute.
+👉 Group & others: read/execute only.
+
+Q4. Check process on a port?
+👉 netstat -tulnp | grep <port> 
+
+Q5. Difference grep vs egrep vs fgrep?
+👉 grep = basic regex, egrep = extended regex, fgrep = fixed string.
+
+Q6. Monitor logs real-time?
+👉 tail -f /var/log/syslog or journalctl -f.
+
+Q7. cron vs systemd timers?
+👉 Cron: traditional scheduler.
+👉 systemd timers: modern, more reliable, logs integrated.
+
+Q8. Find top 10 largest files?
+👉 du -ah /path | sort -rh | head -n 10.
+
+Q9. kill -9 vs kill -15?
+👉 -15 (SIGTERM) → graceful shutdown.
+👉 -9 (SIGKILL) → force kill.
+
+Q10. Troubleshoot disk full?
+👉 df -h, du -sh *, clean logs/tmp files, rotate logs.
+
+🔹 Tomcat – 10 Q&A
+
+Q1. What is Apache Tomcat?
+👉 Open-source Java servlet container (runs JSP/Servlets). Not a full JEE app server.
+
+Q2. Deploy WAR file?
+👉 Place .war in webapps/ → auto-deployed.
+
+Q3. Important config files?
+👉 server.xml, web.xml, context.xml, tomcat-users.xml.
+
+Q4. Difference between server.xml and web.xml?
+👉 server.xml: server-level configs (ports, connectors).
+👉 web.xml: app-level configs (servlets, filters).
+
+Q5. Change Tomcat port?
+👉 Edit <Connector port="8080"> in server.xml.
+
+Q6. Enable HTTPS/SSL?
+👉 Generate keystore → update server.xml with SSL connector.
+
+Q7. Tomcat logs location?
+👉 logs/ directory → catalina.out, localhost.log, manager.log.
+
+Q8. Performance tuning?
+👉 Tune JVM heap, thread pool (server.xml), enable GZIP compression.
+
+Q9. Load balancing Tomcat?
+👉 Use Apache HTTPD/NGINX with mod_jk/mod_proxy → forward to Tomcat cluster.
+
+Q10. Troubleshoot app not starting?
+👉 Check catalina.out, verify WAR deployment, JVM memory, conflicts in server.xml.
